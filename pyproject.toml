@@ -14,8 +14,30 @@ pytest = "^6.0.0"
 flake8 = "*"
 flake8-comprehensions = "*"
 black = "*"
+isort = "*"
+mypy = "*"
+pre-commit = "*"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[flake8]
+max-line-length=100
+
+[pydocstyle]
+convention = "numpy"
+
+[black]
+line_length = 100
+
+[isort]
+profile = "black"
+line_length = 100
+
+[mypy]
+plugins = "pydantic.mypy"
+check_untyped_defs = "True"
+warn_no_return = "True"
+warn_return_any = "True"

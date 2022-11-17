@@ -5,7 +5,7 @@
 # 1. Install VS Code's Python extension.
 # 2. Install poetry for the current user, if not already installed.
 # 3. Install dependencies defined in pyproject.toml and activate new environment.
-#
+# 4. Install pre-commit hooks and configure git.
 # Usage: ./start.sh
 # ======================================================================
 
@@ -48,9 +48,25 @@ function install_poetry {
 function install_env {
     log "Disabling keyring backend.."
     export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
-    poetry install
+    if [ -e "${HOME}/poetry.lock" ]; then
+        poetry update
+    else
+        poetry install
+    fi
     log "Starting the virtual environment.."
     poetry shell
+    log "Done!\\n"
+}
+
+function configure_git {
+    log "Installing pre-commit hooks...\\n"
+    pre-commit install --hook-type pre-commit
+    pre-commit install --hook-type prepare-commit-msg
+    pre-commit install --hook-type pre-push
+    pre-commit run --all-files
+    log "Done!\\n"
+    log "Enabling git push.followTags... "
+    git config --local push.followTags true
     log "Done!\\n"
 }
 
@@ -66,15 +82,18 @@ Running this script will:
   1. Install VS Code's Python extension.
   2. Install poetry for the current user, if not already installed.
   3. Install dependencies defined in pyproject.toml and activate new environment.
+  4. Install pre-commit hooks and configure git.
 EOF
         ;;
     devcontainer|--devcontainer)
         install_env
+        configure_git
         ;;
     *)
         install_vscode_extensions
         install_poetry
         install_env
+        configure_git
         ;;
     esac
 }
