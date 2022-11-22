@@ -6,7 +6,7 @@ a new project within a virtualenv environment set up by poetry.
 To get started, simply run:
 
 ```bash
-./tasks/init.sh <envName>
+./tasks/setup.sh
 ```
 
 This script does several things:

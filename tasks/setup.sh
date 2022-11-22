@@ -6,7 +6,7 @@
 # 2. Install poetry for the current user, if not already installed.
 # 3. Install dependencies defined in pyproject.toml and activate new environment.
 # 4. Install pre-commit hooks and configure git.
-# Usage: ./start.sh
+# Usage: ./setup.sh
 # ======================================================================
 
 function log {

@@ -1,0 +1,4 @@
+# Unfortunately, flake8 doesn't support configuration
+# through pyproject.toml
+[flake8]
+max-line-length=80
